@@ -56,12 +56,18 @@ export default function isDate(input, options) {
         return false;
       }
 
-      const currentYearLastTwoDigits = new Date().getFullYear() % 100;
+      let currentYearFirstTwoDigits;
+      let currentYearLastTwoDigits;
+      {
+        const currentFullYear = new Date().getFullYear();
+        currentYearLastTwoDigits = currentFullYear % 100;
+        currentYearFirstTwoDigits = (currentFullYear - currentYearLastTwoDigits) / 100;
+      }
 
       if (parsedYear < currentYearLastTwoDigits) {
-        fullYear = `20${dateObj.y}`;
+        fullYear = `${currentYearFirstTwoDigits}${dateObj.y}`;
       } else {
-        fullYear = `19${dateObj.y}`;
+        fullYear = `${currentYearFirstTwoDigits - 1}${dateObj.y}`;
       }
     }
 
